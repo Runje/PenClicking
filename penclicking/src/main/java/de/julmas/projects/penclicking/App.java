@@ -8,6 +8,8 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+    	Pen pen = new Pen(0);
+    	pen.click();
+        System.out.println( pen.toString() );
     }
 }
