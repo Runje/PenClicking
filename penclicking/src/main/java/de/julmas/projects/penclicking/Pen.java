@@ -3,9 +3,8 @@
  */
 package de.julmas.projects.penclicking;
 
-import java.util.Date;
-
-//import java.utils.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author Thomas
@@ -14,12 +13,22 @@ import java.util.Date;
 public class Pen {
 	
 	int clicks;
-	Date startTime;
+	Timer timer;
 	
-	public Pen( int clicks )
+	public Pen( int clicktime )
 	{
-		this.clicks = clicks;
-		startTime = new java.util.Date();
+		this.clicks = 0;
+		this.timer = new Timer();
+		
+		timer.schedule( new TimerTask() {
+			
+			@Override
+			public void run() {
+				System.out.println( this );
+				timer.cancel();
+				clicks = 0;
+			}
+		}, clicktime );
 	}
 	
 	/* (non-Javadoc)
@@ -27,7 +36,7 @@ public class Pen {
 	 */
 	@Override
 	public String toString() {
-		return "Pen [clicks=" + clicks + ", startTime=" + startTime + "]";
+		return "Pen [clicks=" + clicks + "]";
 	}
 
 	public void click()
