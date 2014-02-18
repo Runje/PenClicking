@@ -9,11 +9,7 @@ package de.julmas.projects.penclicking.model;
  */
 public class Pen {
 
-    int clicks;
-
-    public Pen() {
-        this.clicks = 0;
-    }
+    int clicks = 0;
 
     /**
      * @return the clicks
@@ -22,16 +18,14 @@ public class Pen {
         return clicks;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         return "Pen [clicks=" + clicks + "]";
     }
 
+    /**
+     * Simulates a click by increasing the click counter.
+     */
     public void click() {
         ++clicks;
     }
