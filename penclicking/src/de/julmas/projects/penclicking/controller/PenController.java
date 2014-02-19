@@ -16,7 +16,7 @@ public class PenController extends Observable implements ActionListener {
 
     private Pen pen;
     private Timer timer = new Timer();
-    private long timeout = 10 * 1000;
+    private long timeout = 5 * 1000;
     private String name = "Player";
     private boolean finish = false;
 
@@ -66,10 +66,9 @@ public class PenController extends Observable implements ActionListener {
 
     /**
      * Indicate that no more clicks could be done.
-     * @param finish
      */
-    public void setFinish(boolean finish) {
-        this.finish = finish;
+    public void setFinish() {
+        this.finish = true;
     }
     
     /**

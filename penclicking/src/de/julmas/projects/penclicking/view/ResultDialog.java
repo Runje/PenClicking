@@ -77,7 +77,8 @@ public class ResultDialog extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // TODO save highscore
         this.dispose();
-        this.gameFrame.dispose();
+        this.gameFrame.setEnabled(true);
+        this.gameFrame.setVisible(true);
     }
 
 }

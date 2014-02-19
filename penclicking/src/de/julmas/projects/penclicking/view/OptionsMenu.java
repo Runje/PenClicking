@@ -24,6 +24,7 @@ public class OptionsMenu extends JDialog implements ActionListener {
     private static final long serialVersionUID = 8179854126221798775L;
     private static final String SAVE_ACTION = "SAVE";
     private static final String CANCEL_ACTION = "CANCEL";
+    private static final int optionsWidth = 20;
     private PenController penController;
     private JTextField txtTimeout;
     private JTextField txtName;
@@ -44,8 +45,8 @@ public class OptionsMenu extends JDialog implements ActionListener {
         JLabel lblName = new JLabel("name");
 
         long timeoutInSec = this.penController.getTimeout() / 1000;
-        this.txtTimeout = new JTextField(String.valueOf(timeoutInSec), 10);
-        this.txtName = new JTextField(this.penController.getName(), 20);
+        this.txtTimeout = new JTextField(String.valueOf(timeoutInSec), optionsWidth);
+        this.txtName = new JTextField(this.penController.getName(), optionsWidth);
 
         JButton btnSave = new JButton("Save");
         btnSave.setActionCommand(SAVE_ACTION);
@@ -84,7 +85,7 @@ public class OptionsMenu extends JDialog implements ActionListener {
             Long timeout = Long.valueOf(this.txtTimeout.getText()) * 1000;
             this.penController.setTimeout(timeout);
         }
-
+        //dispose in any case (SAVE and CANCEL)
         this.dispose();
     }
 }

@@ -20,7 +20,7 @@ public class FinishTimer extends TimerTask {
 
     @Override
     public void run() {
-        this.penController.setFinish(true);
+        this.penController.setFinish();
         this.penController.notifyObservers();
     }
 

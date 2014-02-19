@@ -64,7 +64,8 @@ public class GameFrame extends JFrame implements IObserver, WindowStateListener 
         if (this.penController.isFinish()) {
             this.btnClickPen.setEnabled(false);
             new ResultDialog(this.penController, this);
-            this.dispose();
+            this.setEnabled(false);
+            this.setVisible(false);
         } else {
             int clicks = this.penController.getClicks();
             if (clicks == 0) {
