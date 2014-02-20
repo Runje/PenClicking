@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import de.julmas.projects.penclicking.controller.PenController;
+import de.julmas.projects.penclicking.controller.StateMachine;
 
 /**
  * Result dialog to show final clickcout and name.
@@ -22,15 +23,15 @@ import de.julmas.projects.penclicking.controller.PenController;
  */
 public class ResultDialog extends JDialog implements ActionListener {
     private static final long serialVersionUID = 237188639435169043L;
-    private GameFrame gameFrame;
+    private StateMachine stateMachine;
 
     /**
      * Constructor starts frame.
      * @param penController to load click count.
      * @param gameFrame to close it on result close.
      */
-    public ResultDialog(PenController penController, GameFrame gameFrame) {
-        this.gameFrame = gameFrame;
+    public ResultDialog(PenController penController, StateMachine stateMachine) {
+        this.stateMachine = stateMachine;
 
         this.setTitle("Result");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -69,16 +70,13 @@ public class ResultDialog extends JDialog implements ActionListener {
 
         this.getContentPane().add(mainPanel);
         this.pack();
-        this.setModal(true);
         this.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO save highscore
-        this.dispose();
-        this.gameFrame.setEnabled(true);
-        this.gameFrame.setVisible(true);
+    	stateMachine.nextState();
     }
 
 }

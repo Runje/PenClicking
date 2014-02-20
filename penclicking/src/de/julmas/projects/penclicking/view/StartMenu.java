@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import de.julmas.projects.penclicking.controller.PenController;
+import de.julmas.projects.penclicking.controller.StateMachine;
 
 /**
  * Class for startmenu
@@ -20,13 +21,13 @@ import de.julmas.projects.penclicking.controller.PenController;
  */
 public class StartMenu extends JFrame implements ActionListener {
     private static final long serialVersionUID = 6521284621749651308L;
-    private PenController penController;
     private static final String START_COMMAND = "START";
     private static final String OPTIONS_COMMAND = "OPTIONS";
     private static final String QUIT_COMMAND = "QUIT";
+    private StateMachine stateMachine;
 
-    public StartMenu(PenController penController) {
-        this.penController = penController;
+    public StartMenu(StateMachine stateMachine) {
+        this.stateMachine = stateMachine;
 
         final int frameSizeX = 150;
         final int frameSizeY = 150;
@@ -64,30 +65,17 @@ public class StartMenu extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
         case START_COMMAND:
-            this.loseFocus();
-            new GameFrame(penController, this);
+            stateMachine.nextState();
             break;
         case OPTIONS_COMMAND:
-            new OptionsMenu(this.penController);
-            break;
-
+            stateMachine.menuToOptions();
+        	break;
         case QUIT_COMMAND:
             this.dispose();
+            System.exit(0);
             break;
-
         default:
             break;
         }
     }
-
-    private void loseFocus() {
-        this.setEnabled(false);
-        this.setVisible(false);
-    }
-
-    public void getFocus() {
-        this.setEnabled(true);
-        this.setVisible(true);
-    }
-
 }

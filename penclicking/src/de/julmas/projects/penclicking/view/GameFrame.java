@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import de.julmas.projects.penclicking.controller.PenController;
+import de.julmas.projects.penclicking.controller.StateMachine;
 import de.julmas.projects.penclicking.util.observer.IObserver;
 
 /**
@@ -22,21 +23,22 @@ public class GameFrame extends JFrame implements IObserver, WindowStateListener 
     private static final long serialVersionUID = -8853165778158196157L;
     private JLabel lblClickcount;
     private PenController penController;
-    private StartMenu startMenu;
     private JButton btnClickPen;
+    StateMachine stateMachine;
 
     /**
      * Constructor start Frame.
      * @param penController controller to handle input.
      * @param startMenu needed to set focus after termination.
      */
-    public GameFrame(PenController penController, StartMenu startMenu) {
+    public GameFrame(PenController penController, StateMachine stateMachine) {
         this.penController = penController;
+        this.stateMachine = stateMachine;
         this.penController.addObserver(this);
         this.penController.init();
-        this.startMenu = startMenu;
         this.addWindowStateListener(this);
         this.initialize();
+        
     }
 
     /**
@@ -63,9 +65,7 @@ public class GameFrame extends JFrame implements IObserver, WindowStateListener 
     public void update() {
         if (this.penController.isFinish()) {
             this.btnClickPen.setEnabled(false);
-            new ResultDialog(this.penController, this);
-            this.setEnabled(false);
-            this.setVisible(false);
+            stateMachine.nextState();
         } else {
             int clicks = this.penController.getClicks();
             if (clicks == 0) {
@@ -79,7 +79,7 @@ public class GameFrame extends JFrame implements IObserver, WindowStateListener 
     @Override
     public void windowStateChanged(WindowEvent e) {
         if (e.getID() == WindowEvent.WINDOW_CLOSED) {
-            this.startMenu.getFocus();
+            //TODO: Change state to MENU
         }
     }
 

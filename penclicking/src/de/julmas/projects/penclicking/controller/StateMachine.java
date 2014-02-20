@@ -3,11 +3,13 @@
  */
 package de.julmas.projects.penclicking.controller;
 
+import de.julmas.projects.penclicking.util.observer.Observable;
+
 /**
  * @author Thomas
  *
  */
-public class StateMachine {
+public class StateMachine extends Observable{
 	
 	public enum State{
 		MENU, 
@@ -22,12 +24,22 @@ public class StateMachine {
 		this.state = state;
 	}
 	
+	
+	/**
+	 * @return the state
+	 */
+	public State getState() {
+		return state;
+	}
+
+
 	/**
 	 * Change state from INGAME to MENU
 	 */
 	public void ingameToMenu() {
 		assert(state == State.INGAME);
 		state = State.MENU;
+		this.notifyObservers();
 	}
 	
 	/**
@@ -36,6 +48,7 @@ public class StateMachine {
 	public void menuToOptions() {
 		assert(state == State.MENU);
 		state = State.OPTIONS;
+		this.notifyObservers();
 	}
 	
 	/**
@@ -45,6 +58,7 @@ public class StateMachine {
 		switch ( state ) {
 		case MENU:
 			state = State.INGAME;
+			break;
 		case INGAME:
 			state = State.RESULT;
 			break;
@@ -57,6 +71,7 @@ public class StateMachine {
 		default:
 			break;
 		}
+		this.notifyObservers();
 	}
 
 }

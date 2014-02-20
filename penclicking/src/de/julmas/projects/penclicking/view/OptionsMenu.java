@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import de.julmas.projects.penclicking.controller.PenController;
+import de.julmas.projects.penclicking.controller.StateMachine;
 
 /**
  * Options menu to change player name an timeout time.
@@ -28,6 +29,7 @@ public class OptionsMenu extends JDialog implements ActionListener {
     private PenController penController;
     private JTextField txtTimeout;
     private JTextField txtName;
+    private StateMachine stateMachine;
 
     /**
      * Constructor starts Frame.
@@ -35,8 +37,9 @@ public class OptionsMenu extends JDialog implements ActionListener {
      * @param penController
      *            needed to save and load options.
      */
-    public OptionsMenu(PenController penController) {
+    public OptionsMenu(PenController penController, StateMachine stateMachine) {
         this.penController = penController;
+        this.stateMachine = stateMachine;
 
         this.setTitle("Options");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -74,7 +77,6 @@ public class OptionsMenu extends JDialog implements ActionListener {
 
         this.getContentPane().add(mainPanel);
         this.pack();
-        this.setModal(true);
         this.setVisible(true);
     }
 
@@ -85,7 +87,6 @@ public class OptionsMenu extends JDialog implements ActionListener {
             Long timeout = Long.valueOf(this.txtTimeout.getText()) * 1000;
             this.penController.setTimeout(timeout);
         }
-        //dispose in any case (SAVE and CANCEL)
-        this.dispose();
+        stateMachine.nextState();
     }
 }

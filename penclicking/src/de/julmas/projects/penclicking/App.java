@@ -1,7 +1,6 @@
 package de.julmas.projects.penclicking;
 
-import de.julmas.projects.penclicking.controller.PenController;
-import de.julmas.projects.penclicking.view.StartMenu;
+import de.julmas.projects.penclicking.view.GUI;
 
 /**
  * Class with main method for startup.
@@ -17,9 +16,8 @@ public class App {
      * Launch the application.
      */
     public static void main(String[] args) {
-        PenController penController = new PenController();
-        StartMenu startMenu = new StartMenu(penController);
-        startMenu.setVisible(true);
+    	//start GUI
+    	new GUI();
     }
 
 }
