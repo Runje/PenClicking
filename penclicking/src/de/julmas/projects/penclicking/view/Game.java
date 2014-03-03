@@ -1,13 +1,13 @@
 package de.julmas.projects.penclicking.view;
 
 import java.awt.BorderLayout;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JWindow;
 
 import de.julmas.projects.penclicking.controller.PenController;
 import de.julmas.projects.penclicking.controller.StateMachine;
@@ -18,12 +18,13 @@ import de.julmas.projects.penclicking.util.observer.IObserver;
  * @author jmayer
  *
  */
-public class GameFrame extends JFrame implements IObserver, WindowStateListener {
+public class Game extends JWindow implements IObserver, ActionListener {
 
     private static final long serialVersionUID = -8853165778158196157L;
     private JLabel lblClickcount;
     private PenController penController;
     private JButton btnClickPen;
+    private JButton btnClose;
     StateMachine stateMachine;
 
     /**
@@ -31,34 +32,33 @@ public class GameFrame extends JFrame implements IObserver, WindowStateListener 
      * @param penController controller to handle input.
      * @param startMenu needed to set focus after termination.
      */
-    public GameFrame(PenController penController, StateMachine stateMachine) {
+    public Game(PenController penController, StateMachine stateMachine) {
         this.penController = penController;
         this.stateMachine = stateMachine;
         this.penController.addObserver(this);
         this.penController.init();
-        this.addWindowStateListener(this);
         this.initialize();
-        
     }
 
     /**
      * Initialize the contents of the frame.
      */
     private final void initialize() {
-        this.setTitle("Click it, bitch!");
-        this.setBounds(100, 100, 450, 300);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        this.btnClickPen = new JButton("Start");
+    	this.setSize(300,300);
+    	this.setLocation(500,100);
+        this.btnClickPen = new JButton("Click");
         this.btnClickPen.addActionListener(this.penController);
+        
+        this.btnClose = new JButton("Cancel");
+        this.btnClose.addActionListener(this);
         this.lblClickcount = new JLabel("Clickcount:");
-
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(this.btnClickPen, BorderLayout.CENTER);
         mainPanel.add(this.lblClickcount, BorderLayout.NORTH);
-
-        this.getContentPane().add(mainPanel);
-        this.setVisible(true);
+        mainPanel.add(this.btnClose, BorderLayout.SOUTH);
+        this.getContentPane().add(mainPanel);	
+		this.setVisible(true);
     }
 
     @Override
@@ -76,11 +76,8 @@ public class GameFrame extends JFrame implements IObserver, WindowStateListener 
         }
     }
 
-    @Override
-    public void windowStateChanged(WindowEvent e) {
-        if (e.getID() == WindowEvent.WINDOW_CLOSED) {
-            //TODO: Change state to MENU
-        }
-    }
-
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		this.stateMachine.ingameToMenu();
+	}
 }
